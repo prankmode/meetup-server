@@ -1,7 +1,5 @@
-# frozen_string_literal: true
-
-Meetup.destroy_all
-User.destroy_all
+Meetups.destroy_all
+Users.destroy_all
 u  = User.create({email: "maud", password: "maud", password_confirmation: "maud"})
 u2 = User.create({email: "harriet", password: "harriet", password_confirmation: "harriet"})
 Meetup.create! [

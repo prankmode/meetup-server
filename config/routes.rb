@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 Rails.application.routes.draw do
+  resources :meetups
+  post 'meetups_multiple' => 'meetups#multiple'
+  get '/search' => 'meetups#search'
   resources :examples, except: [:new, :edit]
   post '/sign-up' => 'users#signup'
   post '/sign-in' => 'users#signin'
