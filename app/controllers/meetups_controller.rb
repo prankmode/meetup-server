@@ -1,17 +1,26 @@
-Meetupclass MeetupsController < ProtectedController
+class MeetupsController < ProtectedController
   before_action :set_meetup, only: [:show, :update, :destroy]
   require 'pry'
+  require 'meetup_client'
 
   # GET /meetups
   # gets the meetups that belong to the logged in user
   def index
-    @meetups = current_user.meetups.all
-    render json: @meetups
+    @my_meetups = current_user.meetups.all
+    render json: @my_meetups
   end
 
   def search
-
-    render json: @events
+    binding.pry
+    meetup_api = MeetupApi.new
+    s_params = { category: '34',
+                 zip: params['m_search']['location'],
+                 radius: params['m_location']['radius'],
+                 status: 'upcoming',
+                 format: 'json',
+                 page: '50' }
+    @@search_meetups = meetup_api.open_events(s_params)
+    render json: @@search_meetups
   end
 
 
@@ -28,7 +37,7 @@ Meetupclass MeetupsController < ProtectedController
       m_params = { name: m['name'],
                    plain_text_description: m['plain_text_description'],
                    event_id: m['event_id'],
-                   short_link: m['short_link'] }
+                   event_url: m['event_url'] }
       nm = Meetup.new(m_params)
       nm.save
     end
@@ -41,10 +50,22 @@ Meetupclass MeetupsController < ProtectedController
     # end
   end
 
-  # POST /meetups
-  def create
-    @meetup = Meetup.new(meetup_params)
-
+  # POST /meetups/:id
+  # we are going to send in the id of the meetup we want to save
+  def create_id
+    meetup_id = params[:id]
+    binding.pry
+    #  now look in the @search_meetups list for this meetup - all
+    # the data is there - no need to pink the Meetup API again
+    m_idx = @@search_meetups['results'].index { |m| m['id'] == meetup_id }
+    newm = @@search_meetups['results'][m_idx]
+    the_time = newm['time']
+    m_params = { name: newm['name'],
+                 event_id: newm['event_id'],
+                 event_url: newm['event_url'],
+                 time: newm['time'],
+                 group: newm['group']['name'] }
+    @meetup = current_user.meetups.build(m_params)
     if @meetup.save
       render json: @meetup, status: :created, location: @meetup
     else
@@ -74,6 +95,7 @@ Meetupclass MeetupsController < ProtectedController
 
     # Only allow a trusted parameter "white list" through.
     def meetup_params
-      params.require(:meetup).permit(:name, :plain_text_description, :event_id, :short_link)
+      params.require(:meetup).permit(:name, :plain_text_description, :event_id,
+                                     :event_url, :time)
     end
 end

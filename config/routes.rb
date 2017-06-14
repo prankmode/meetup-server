@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :meetups
   post 'meetups_multiple' => 'meetups#multiple'
   get '/search' => 'meetups#search'
+  post '/meetups/:id' => 'meetups#create_id'
   resources :examples, except: [:new, :edit]
   post '/sign-up' => 'users#signup'
   post '/sign-in' => 'users#signin'

@@ -12,13 +12,13 @@ curl "${API}${URL_PATH}" \
       "name": "'"${MNAME}-1"'",
       "plain_text_description": "hello goodbye",
       "event_id": "424242424242",
-      "short_link": "https://google.com"
+      "event_url": "https://google.com"
     },
     {
       "name": "'"${MNAME}-2"'",
       "plain_text_description": "goodbye hello",
       "event_id": "424242424242",
-      "short_link": "https://google.com"
+      "event_url": "https://google.com"
     }
     ]
   }'

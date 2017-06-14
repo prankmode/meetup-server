@@ -19,7 +19,7 @@ open('seeds.rb', 'w') do |f|
   f.puts 'Meetup.create! ['
 
   meetups.each do |r|
-    f.puts "{name: \"#{r['name']}\", plain_text_description: \"#{r['description']}\", event_id: \"#{r['event_id']}\", short_link: \"#{r['event_url']}\", user_id: u.id },"
+    f.puts "{name: \"#{r['name']}\", plain_text_description: \"#{r['description']}\", event_id: \"#{r['event_id']}\", event_url: \"#{r['event_url']}\", user_id: u.id },"
   end
 
   f.puts ']'

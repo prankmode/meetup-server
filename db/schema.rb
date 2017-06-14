@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(version: 20170612154716) do
     t.string   "name"
     t.text     "plain_text_description"
     t.string   "event_id"
-    t.string   "short_link"
-    t.datetime "start_dt"
+    t.string   "event_url"
+    t.string   "time"
     t.string   "group"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
