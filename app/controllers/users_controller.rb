@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 class UsersController < ProtectedController
   skip_before_action :authenticate, only: [:signup, :signin]
-  require 'pry'
   # POST '/sign-up'
   def signup
     @user = User.create(user_creds)
@@ -14,7 +13,6 @@ class UsersController < ProtectedController
 
   # POST '/sign-in'
   def signin
-    binding.pry
     creds = user_creds
     if (user = User.authenticate creds[:email],
                                  creds[:password])

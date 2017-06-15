@@ -1,6 +1,5 @@
 class MeetupsController < ProtectedController
   before_action :set_meetup, only: [:show, :update, :destroy]
-  # require 'pry'
   require 'meetup_client'
 
   # GET /meetups
@@ -24,7 +23,6 @@ class MeetupsController < ProtectedController
   end
 
   def reminder_email
-    binding.pry
     my_meetups = current_user.meetups.all
     UserMailer.reminder_email(current_user, my_meetups).deliver_now
     render json: my_meetups
