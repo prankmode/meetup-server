@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 class UsersController < ProtectedController
   skip_before_action :authenticate, only: [:signup, :signin]
-
+  require 'pry'
   # POST '/sign-up'
   def signup
-    user = User.create(user_creds)
+    @user = User.create(user_creds)
     if user.valid?
       render json: user, status: :created
     else
@@ -14,9 +14,11 @@ class UsersController < ProtectedController
 
   # POST '/sign-in'
   def signin
+    binding.pry
     creds = user_creds
     if (user = User.authenticate creds[:email],
                                  creds[:password])
+      # UserMailer.welcome_email(user).deliver_now
       render json: user, serializer: UserLoginSerializer, root: 'user'
     else
       head :unauthorized

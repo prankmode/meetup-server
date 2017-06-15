@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hi <%= @user.email %>,</h1>
+    <p>
+      Here are your peek @ meetups reminders:<br>
+
+      <% @meetups.each do |m| %>
+        <h3><%= m.name %></h3>
+      <%end %>
+
+
+    </p>
+    <p>
+      To check on your saved peeks, sign in here: <%= @url %>.
+    </p>
+    <p>Keep peeking!</p>
+  </body>
+</html>

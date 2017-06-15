@@ -23,6 +23,13 @@ class MeetupsController < ProtectedController
     render json: @@search_meetups
   end
 
+  def reminder_email
+    binding.pry
+    my_meetups = current_user.meetups.all
+    UserMailer.reminder_email(current_user, my_meetups).deliver_now
+    render json: my_meetups
+  end
+
 
   # GET /meetups/1
   def show
