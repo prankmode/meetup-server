@@ -1,6 +1,6 @@
 class MeetupsController < ProtectedController
   before_action :set_meetup, only: [:show, :update, :destroy]
-  require 'pry'
+  # require 'pry'
   require 'meetup_client'
 
   # GET /meetups
