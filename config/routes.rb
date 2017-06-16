@@ -10,5 +10,6 @@ Rails.application.routes.draw do
   post '/sign-in' => 'users#signin'
   delete '/sign-out/:id' => 'users#signout'
   patch '/change-password/:id' => 'users#changepw'
+  patch '/email/:id' => 'users#add_verified_email'
   resources :users, only: [:index, :show]
 end

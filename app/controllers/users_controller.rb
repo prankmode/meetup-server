@@ -44,6 +44,21 @@ class UsersController < ProtectedController
     end
   end
 
+  # PATCH /email/:id
+  def add_verified_email
+    require 'pry'
+    binding.pry
+    creds = user_creds
+    if current_user == User.find(params[:id])
+      current_user.reminder_email = creds[:email]
+      current_user.verified_reminder_email = true
+      current_user.save
+      head :no_content
+    else
+      head :bad_request
+    end
+  end
+
   def index
     render json: User.all
   end
