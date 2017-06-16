@@ -12,6 +12,6 @@ class UserMailer < ApplicationMailer
     @user = user
     @meetups = meetups
     @url = 'https://prankmode.github.io/meetup-client'
-    mail(to: @user.email, subject: 'Your peek reminders')
+    mail(to: @user.reminder_email, subject: 'Your peek reminders')
   end
 end
