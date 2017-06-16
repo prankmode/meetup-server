@@ -1,13 +1,32 @@
 # Meetup Server
 
-This is the server for the Meetup app.  The server calls the Meetup API.
+This is the server/API for the Meetup app.
 
 ## Dependencies
 
-Meetup API, Rails, Ruby
+This is a Rails server.  It calls the Meetup.com API. It uses a Ruby Gem to
+interface to the Meetup API.
+
+The API handles a search request and returns a list of meetups (max 50) that
+will be happening in the near future.  From that list, the user can save ones that they are interested in.  The server will save these meetups.
+
+The server also implement an email that can be sent out with the list of
+the user's saved meetups.
 
 
 ## API
+
+### Meetup
+
+
+| Verb   | URI Pattern            | Controller#Action         |
+|--------|------------------------|---------------------------|
+| GET    | `/meetups`             | `meetups#index`           |
+| GET    | `/search`              | `meetups#search`          |
+| GET    | `/remind`              | `meetups#reminder_email`  |
+| DELETE | `/meetups/:id`         | `meetups#destroy`         |
+| POST   | `/meetups/:id`         | `meetups#create_id`       |
+
 
 ### Authentication
 

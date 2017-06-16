@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 class UsersController < ProtectedController
   skip_before_action :authenticate, only: [:signup, :signin]
+
   # POST '/sign-up'
   def signup
-    @user = User.create(user_creds)
+    user = User.create(user_creds)
     if user.valid?
       render json: user, status: :created
     else
@@ -16,7 +17,6 @@ class UsersController < ProtectedController
     creds = user_creds
     if (user = User.authenticate creds[:email],
                                  creds[:password])
-      # UserMailer.welcome_email(user).deliver_now
       render json: user, serializer: UserLoginSerializer, root: 'user'
     else
       head :unauthorized
@@ -46,14 +46,12 @@ class UsersController < ProtectedController
 
   # PATCH /email/:id
   def add_verified_email
-    require 'pry'
-    binding.pry
     creds = user_creds
     if current_user == User.find(params[:id])
       current_user.reminder_email = creds[:email]
       current_user.verified_reminder_email = true
       current_user.save
-      head :no_content
+      render json: current_user
     else
       head :bad_request
     end

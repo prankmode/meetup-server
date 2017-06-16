@@ -28,31 +28,6 @@ class MeetupsController < ProtectedController
   end
 
 
-  # GET /meetups/1
-  def show
-    render json: @meetup
-  end
-
-  # POST /meetups_multiple
-  def multiple
-    meetups_list = params["meetups"]
-    meetups_list.each do |m|
-      m_params = { name: m['name'],
-                   plain_text_description: m['plain_text_description'],
-                   event_id: m['event_id'],
-                   event_url: m['event_url'] }
-      nm = Meetup.new(m_params)
-      nm.save
-    end
-
-
-    # if @meetup.save
-    #   render json: @meetup, status: :created, location: @meetup
-    # else
-    #   render json: @meetup.errors, status: :unprocessable_entity
-    # end
-  end
-
   # POST /meetups/:id
   # we are going to send in the id of the meetup we want to save
   def create_id
@@ -70,15 +45,6 @@ class MeetupsController < ProtectedController
     @meetup = current_user.meetups.build(m_params)
     if @meetup.save
       render json: @meetup, status: :created, location: @meetup
-    else
-      render json: @meetup.errors, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /meetups/1
-  def update
-    if @meetup.update(meetup_params)
-      render json: @meetup
     else
       render json: @meetup.errors, status: :unprocessable_entity
     end
