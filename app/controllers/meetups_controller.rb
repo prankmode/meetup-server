@@ -1,6 +1,5 @@
 class MeetupsController < ProtectedController
   before_action :set_meetup, only: [:show, :update, :destroy]
-  require 'pry'
   require 'meetup_client'
 
   # GET /meetups
@@ -11,7 +10,6 @@ class MeetupsController < ProtectedController
   end
 
   def search
-    # binding.pry
     meetup_api = MeetupApi.new
     s_params = { category: '34',
                  zip: params['m_search']['location'],
@@ -31,7 +29,6 @@ class MeetupsController < ProtectedController
 
   # POST /meetups_multiple
   def multiple
-    # binding.pry
     meetups_list = params["meetups"]
     meetups_list.each do |m|
       m_params = { name: m['name'],
@@ -54,7 +51,6 @@ class MeetupsController < ProtectedController
   # we are going to send in the id of the meetup we want to save
   def create_id
     meetup_id = params[:id]
-    # binding.pry
     #  now look in the @search_meetups list for this meetup - all
     # the data is there - no need to pink the Meetup API again
     m_idx = @@search_meetups['results'].index { |m| m['id'] == meetup_id }
@@ -96,6 +92,6 @@ class MeetupsController < ProtectedController
     # Only allow a trusted parameter "white list" through.
     def meetup_params
       params.require(:meetup).permit(:name, :plain_text_description, :event_id,
-                                     :event_url, :time)
+                                     :event_url, :time, :group)
     end
 end
