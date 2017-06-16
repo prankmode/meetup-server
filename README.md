@@ -2,6 +2,14 @@
 
 This is the server/API for the Meetup app.
 
+## Links
+
+-  FRONT END REPO   https://github.com/prankmode/meetup-client
+-  BACK END REPO    https://github.com/prankmode/meetup-server
+-  FRONT END DEPLOYED    https://prankmode.github.io/meetup-client/
+-  BACK END DEPLOYED    https://sleepy-bayou-40417.herokuapp.com/
+
+
 ## Dependencies
 
 This is a Rails server.  It calls the Meetup.com API. It uses a Ruby Gem to
